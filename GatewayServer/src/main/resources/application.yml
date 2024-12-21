@@ -1,0 +1,25 @@
+server:
+  port: 8082  # Port for the API Gateway
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: microservice1-route
+          uri: lb://MICROSERVICE1 # Use the service name registered in Eureka
+          predicates:
+            - Path=/api/** # Path to route requests to Microservice 1
+
+        - id: microservice2-route
+          uri: lb://MICROSERVICE2 # Use the service name registered in Eureka
+          predicates:
+            - Path=/web/** # Path to route requests to Microservice 2
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/ # URL of the Eureka Server
+  instance:
+    prefer-ip-address: true
