@@ -1,5 +1,6 @@
 import com.example.springbootservices.Main;
 import com.example.springbootservices.repository.Employee;
+import com.example.springbootservices.service.ServiceClass;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
@@ -22,6 +25,11 @@ public class EmployeeControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private ServiceClass serviceClass;
+
+
+
     @Test
     public void testCreateEmployeeWithValidData() throws Exception {
         // Create a valid employee JS  hhON object
@@ -33,6 +41,15 @@ public class EmployeeControllerTest {
                         .content(objectMapper.writeValueAsString(employee)))
                 .andExpect(status().isOk())  // Expecting HTTP 200 OK
                 .andExpect(jsonPath("$.name").value("John Doe"));  // Verify the returned employee name
+    }
+
+    @Test
+    public void exception()
+    {
+        Exception exception = assertThrows(RuntimeException.class, () -> {
+            serviceClass.processMessage("Hi");
+        });
+        assertEquals("Test", exception.getMessage());
     }
 
     @Test

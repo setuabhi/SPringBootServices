@@ -12,7 +12,7 @@ public class ServiceClass {
     }
 
     public String processMessage(String message) {
-        return "DI example: "+message;
+        throw new RuntimeException("Test");
     }
 }
 
