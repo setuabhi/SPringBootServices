@@ -6,6 +6,7 @@
 </dependency>
 
 Life Cycle Annotations:
+
     @BeforeAll: Executes once before all tests in a class.
     @BeforeEach: Runs before each test case.
     @Test: Marks a method as a test case.
@@ -14,6 +15,7 @@ Life Cycle Annotations:
     @AfterAll: Executes once after all tests in a class.
 
 Assert Statements:
+
     assertEquals(expected, actual)
     assertTrue(condition)
     assertFalse(condition)
@@ -26,6 +28,7 @@ Assert Statements:
                 );
 
 Benefits of Junit5 over 4:
+
     1. Nested (For better grouping)
     2. assertAll and assertThrows
     3. lambda: assertEquals(4, () -> 2 + 2);
@@ -33,6 +36,7 @@ Benefits of Junit5 over 4:
     5. Dynamic Test cases using: @TestFactory
 
 Test Post mapping:
+
     1. Annotations on Test class: @SpringBootTest(classes = Main.class) and @AutoConfigureMockMvc
     2. @Autowired
         private MockMvc mockMvc;
@@ -42,10 +46,13 @@ Test Post mapping:
         .andExpect(status().isOk())  // Expecting HTTP 200 OK
         .andExpect(jsonPath("$.name").value("John Doe")); since output is json and name is John Doe
 
-@SpringBootTest(classes = Main.class):  It ensures that the entire Spring application context is started during the test, providing a real-world environment to test your application.
-                                        We can't test MockMvc without it
+@SpringBootTest(classes = Main.class)
+
+    It ensures that the entire Spring application context is started during the test, providing a real-world environment to test your application.
+    We can't test MockMvc without it
 
 Mockito:
+
     1.  <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId> //It has mockito  dependency
