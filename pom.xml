@@ -14,6 +14,7 @@
         <module>microservice1</module>
         <module>Microservice2</module>
         <module>GatewayServer</module>
+        <module>InterviewPrep</module>
     </modules>
 
     <properties>

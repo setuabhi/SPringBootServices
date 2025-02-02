@@ -69,4 +69,8 @@ Mockito:
                 verify(employee).getEmployeeName(); // Verify that the method was called
             }
         }
-
+    3. Mock static method: <artifactId>mockito-inline</artifactId> needed
+            MockedStatic<Employee> mockedStatic = mockStatic(Employee.class)) {
+            // Define behavior of the static method
+            mockedStatic.when(Employee::getEmployeeName()).thenReturn("Mocked Name");
+            assertEquals("Mocked Name", employee.getEmployeeName());
