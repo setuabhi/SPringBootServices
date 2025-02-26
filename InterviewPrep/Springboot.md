@@ -6,7 +6,7 @@
         3. The controller processes the request and returns a ModelAndView.
         4. DispatcherServlet sends the model to the ViewResolver.
         5. The view is rendered and returned as a response.
-   2. Dependency Injection (DI) in Spring Boot is a design pattern that allows objects to be injected into other objects rather than being created manually.
+2. Dependency Injection (DI) in Spring Boot is a design pattern that allows objects to be injected into other objects rather than being created manually.
 
            1️⃣ Constructor Injection (Recommended)
            Spring injects dependencies via the constructor. This is the most preferred approach as it ensures immutability and testability.
