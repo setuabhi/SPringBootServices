@@ -5,7 +5,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Component
 public class Microservice1Fallback implements FeignImpl {
@@ -15,5 +17,6 @@ public class Microservice1Fallback implements FeignImpl {
         output.add(new Employee("Fallback","Fallback",0));
         return output;
     }
+
 }
 

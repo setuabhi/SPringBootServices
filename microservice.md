@@ -1,0 +1,1 @@
+1. Load balancer we can achieve via RestTemplate, Feign Client and Nimbus
