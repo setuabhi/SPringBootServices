@@ -1,6 +1,4 @@
 package com.example.springbootservices.controller;
-
-import com.example.springbootservices.repository.Address;
 import com.example.springbootservices.repository.Employee;
 import com.example.springbootservices.repository.EmployeeRepository;
 import com.example.springbootservices.service.ServiceClass2;
@@ -19,10 +17,19 @@ public class RestController {
     @Autowired
     EmployeeRepository employeeRepository;
 
+    //{
+    //    "name": "Kanchani",
+    //    "designation": "Software Engineer",
+    //    "salary": 75000,
+    //    "address": {
+    //    "street": "Ghazhipur",
+    //    "city": "Motihari"
+    //  }
+    //}
     @PostMapping("/saveEmployee")
     public Employee createEmployee(@RequestBody Employee employee) {
         if (employee.getName() == null || employee.getName().isEmpty()) {
-            throw new RuntimeException("Employee name cannot be empty");
+            throw new RuntimeException("Employee name cannot be empty"); // We will 400 Bad request due to Controller Advise
         }
         return employeeRepository.save(employee);
     }
