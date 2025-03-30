@@ -1,17 +1,17 @@
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.*;
 
 /**
  * Java 11 introduced HttpClient, which supports asynchronous requests using CompletableFuture, we can acheive this using mutilthreading too
  */
-@SpringBootApplication
 public class HttpClientExample {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
 
         // Define the requests
@@ -41,5 +41,23 @@ public class HttpClientExample {
         }).join(); // Wait for completion
 
         System.out.println("All requests completed.");
+
+//No meed of above code, just use executer framework with 3 threads.
+        RestTemplate rs = new RestTemplate();
+        ExecutorService es = Executors.newFixedThreadPool(3);
+        Callable<String> call1 = () -> rs.getForObject("https://jsonplaceholder.typicode.com/posts/1",String.class);
+        Callable<String> call2 = () -> rs.getForObject("https://jsonplaceholder.typicode.com/posts/2",String.class);
+        Callable<String> call3 = () -> rs.getForObject("https://jsonplaceholder.typicode.com/posts/3",String.class);
+
+        Future<String> f1 = es.submit(call1);
+        Future<String> f2 = es.submit(call2);
+        Future<String> f3 = es.submit(call3);
+
+        System.out.println(f1.get());
+        System.out.println(f2.get());
+        System.out.println(f3.get());
+
+
+
     }
 }

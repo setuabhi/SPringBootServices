@@ -22,6 +22,9 @@ public class RestController {
     @Autowired
     FeignImpl feign;
 
+    @Autowired
+    Timeservice timeservice;
+
     @GetMapping("/getByIdAndName/{id}/{name}")
     public List<Employee> getData(@PathVariable("id") Integer id, @PathVariable("name") String name) {
         return feign.allUser(id, name);
@@ -33,7 +36,15 @@ public class RestController {
     }
 
     @GetMapping("/getCurrentTime")
-    public String getTime() {
-        return LocalTime.now().toString();
+    public String getTime() throws InterruptedException {
+        System.out.println(Thread.currentThread().getName());
+        return timeservice.returnTime();
+    }
+
+    @GetMapping("/getCurrentTimeAsyncWay")
+    public String getTimeAsync() {
+        System.out.println(Thread.currentThread().getName());
+        timeservice.slowMethodToSendEmail(); //Will be running in different thread
+        return "Request received! Processing in background...";  // Return immediately
     }
 }

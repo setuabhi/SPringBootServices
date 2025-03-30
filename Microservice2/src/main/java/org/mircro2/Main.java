@@ -9,8 +9,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, GsonAutoConfiguration.class})
-@EnableFeignClients
-@EnableEurekaClient
+@EnableAsync
 public class Main {
     public static void main(String[] args) {
                 SpringApplication.run(Main.class,args);
