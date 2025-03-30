@@ -15,6 +15,7 @@
         <module>Microservice2</module>
         <module>GatewayServer</module>
         <module>InterviewPrep</module>
+        <module>SpringBatchCaching</module>
     </modules>
 
     <properties>
