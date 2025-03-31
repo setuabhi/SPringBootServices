@@ -1,6 +1,7 @@
 package org.mircro2.service;
 
 import com.example.springbootservices.repository.Employee;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -30,9 +32,16 @@ public class RestController {
         return feign.allUser(id, name);
     }
 
+    @CircuitBreaker(name = "myService", fallbackMethod = "fallbackResponse")
     @GetMapping("/allEmployee")
     List<Employee> allUser() {
         return restTemplate.getForObject("http://MICROSERVICE1/api/allEmployee", List.class); //Load balancer
+    }
+
+    public List<Employee> fallbackResponse(Exception e) {
+        List<Employee> output= new ArrayList<>();
+        output.add(new Employee("Fallback using template"+e.getMessage(),"Fallback",0));
+        return output;
     }
 
     @GetMapping("/getCurrentTime")

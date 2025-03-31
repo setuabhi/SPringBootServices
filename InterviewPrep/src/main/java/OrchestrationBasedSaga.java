@@ -6,7 +6,7 @@ public class OrchestrationBasedSaga {
     // centralOrchestrator microservice
   /*  @PostMapping("/PlaceOrder")
     public void processOrder(@RequestBody Order order) {
-        callOrderProcessMicroserviceUsingFeignClient(order);
+        callOrderProcessMicroserviceUsingFeignClient(orderId);
         callPaymentProcessMicroserviceUsingFeignClient(order);
         callUpdateInventoryMicroserviceUsingFeignClient(order);
     }*/
