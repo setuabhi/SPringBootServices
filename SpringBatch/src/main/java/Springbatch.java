@@ -34,8 +34,7 @@ public class Springbatch {
     }
 
     @Bean
-    public ItemReader<String> reader()
-    {
+    public ItemReader<String> reader() {
         return new ReaderClass();
     }
 
@@ -50,14 +49,6 @@ public class Springbatch {
     }
 
     @Bean
-    public Job importUserJob(Step step) {
-        return new JobBuilder("importUserJob")
-                .incrementer(new RunIdIncrementer())
-                .start(step)
-                .build();
-    }
-
-    @Bean
     public Step step(JdbcCursorItemReader<String> reader,
                      ItemProcessor<String, String> processor,
                      ItemWriter<String> writer) {
@@ -66,6 +57,23 @@ public class Springbatch {
                 .reader(reader)
                 .processor(processor)
                 .writer(writer)
+                .build();
+    }
+
+    @Bean
+    public Step taskletStep() {
+        return new StepBuilder("taskletStep")
+                .tasklet(new TaskeletClass())
+                .build();
+    }
+
+    @Bean
+    public Job importUserJob(Step step, Step taskletStep) {
+        return new JobBuilder("importUserJob")
+                .incrementer(new RunIdIncrementer())
+                .listener(new JobListener())
+                .start(step)
+                .next(taskletStep)
                 .build();
     }
 

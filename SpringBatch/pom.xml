@@ -6,7 +6,7 @@
         <artifactId>SPringBootServices</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>SpringBatchCaching</artifactId>
+    <artifactId>SpringBatch</artifactId>
     <name>Archetype - SpringBatchCaching</name>
     <url>http://maven.apache.org</url>
     <dependencies>

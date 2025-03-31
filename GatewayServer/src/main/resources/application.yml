@@ -10,12 +10,12 @@ spring:
         - id: microservice1-route
           uri: lb://MICROSERVICE1 # Use the service name registered in Eureka
           predicates:
-            - Path=/api/** # Path to route requests to Microservice 1
+            - Path=/api/** # Path to route requests to Microservice 1 (entry point of MICROSERVICE1)
 
         - id: microservice2-route
           uri: lb://MICROSERVICE2 # Use the service name registered in Eureka
           predicates:
-            - Path=/web/** # Path to route requests to Microservice 2
+            - Path=/web/** # Path to route requests to Microservice 2 (entry point of MICROSERVICE2)
 
 eureka:
   client:
