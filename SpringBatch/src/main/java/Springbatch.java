@@ -15,8 +15,13 @@ import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JdbcCursorItemReader;
 import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
+import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
+import org.springframework.batch.item.file.mapping.DefaultLineMapper;
+import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 
 import javax.sql.DataSource;
 
@@ -31,6 +36,27 @@ public class Springbatch {
                 .sql("SELECT id, name FROM person")
                 .rowMapper(new PersonMapper())
                 .build();
+    }
+
+    @Bean
+    public FlatFileItemReader<Person> readerFlatFile() {
+        FlatFileItemReader<Person> reader = new FlatFileItemReader<>();
+        reader.setResource(new ClassPathResource("input.csv"));
+        reader.setLinesToSkip(1); // skip header
+
+
+        DelimitedLineTokenizer tokenizer = new DelimitedLineTokenizer();
+        tokenizer.setNames("id", "name");
+
+        BeanWrapperFieldSetMapper<Person> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
+        fieldSetMapper.setTargetType(Person.class);
+
+        DefaultLineMapper<Person> lineMapper = new DefaultLineMapper<>();
+        lineMapper.setLineTokenizer(tokenizer);
+        lineMapper.setFieldSetMapper(fieldSetMapper);
+
+        reader.setLineMapper(lineMapper);
+        return reader;
     }
 
     @Bean
