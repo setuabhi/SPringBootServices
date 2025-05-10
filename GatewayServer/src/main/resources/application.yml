@@ -1,5 +1,10 @@
 server:
   port: 8082  # Port for the API Gateway
+# ssl:
+#    enabled: true
+#    key-store: classpath:keystore.p12   # or keystore.jks
+#    key-store-password: your-keystore-password
+#    key-store-type: PKCS12
 
 spring:
   application:
