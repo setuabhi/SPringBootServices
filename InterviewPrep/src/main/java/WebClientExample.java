@@ -18,15 +18,10 @@ public class WebClientExample {
         Mono<String> m2 = webClient.get().uri("https://jsonplaceholder.typicode.com/posts/2").retrieve().bodyToMono(String.class);
         Mono<String> m3 = webClient.get().uri("https://jsonplaceholder.typicode.com/posts/3").retrieve().bodyToMono(String.class);
 
-        Mono<Map<String, String>> resultMono = Mono.zip(m1, m2, m3)
-                .map(tuple -> {
-                    Map<String, String> map = new HashMap<>();
-                    map.put("post1", tuple.getT1());
-                    map.put("post2", tuple.getT2());
-                    map.put("post3", tuple.getT3());
-                    return map;
-                });
-        Map<String, String> resultMap = resultMono.block(); // means you're done with the outputs
+        // Blocking and getting the response
+        String response1 = m1.block();
+        String response2 = m2.block();
+        String response3 = m3.block();
         System.out.println("Done");
 
 //Stream example:
