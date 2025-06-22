@@ -1,10 +1,10 @@
 server:
   port: 8082  # Port for the API Gateway
-# ssl:
-#    enabled: true
-#    key-store: classpath:keystore.p12   # or keystore.jks
-#    key-store-password: your-keystore-password
-#    key-store-type: PKCS12
+#  security:
+#    oauth2:
+#      resource-server:
+#        jwt:
+#          jwk-set-uri: https://your-issuer.com/oauth2/jwks aUTHENTICATION
 
 spring:
   application:
@@ -16,6 +16,12 @@ spring:
           uri: lb://MICROSERVICE1 # Use the service name registered in Eureka
           predicates:
             - Path=/api/** # Path to route requests to Microservice 1 (entry point of MICROSERVICE1)
+            - RemoteAddr=127.0.0.1/32 # allow only localhost IPs
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10 #means 10 requests per second are allowed
+                redis-rate-limiter.burstCapacity: 20 #At any moment, up to 20 requests can be allowed instantly if the bucket is full.
 
         - id: microservice2-route
           uri: lb://MICROSERVICE2 # Use the service name registered in Eureka
