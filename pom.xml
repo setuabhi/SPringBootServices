@@ -16,6 +16,7 @@
         <module>GatewayServer</module>
         <module>InterviewPrep</module>
         <module>SpringBatch</module>
+        <module>RateLimiter</module>
     </modules>
 
     <properties>
