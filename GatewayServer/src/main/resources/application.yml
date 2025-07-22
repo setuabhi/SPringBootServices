@@ -1,10 +1,10 @@
 server:
+#  ssl:
+#    key-alias:
+#    key-store-password:
+#    key-store: Path to JKS file
+#    key-store-type: JKS
   port: 8082  # Port for the API Gateway
-#  security:
-#    oauth2:
-#      resource-server:
-#        jwt:
-#          jwk-set-uri: https://your-issuer.com/oauth2/jwks aUTHENTICATION
 
 spring:
   redis:
