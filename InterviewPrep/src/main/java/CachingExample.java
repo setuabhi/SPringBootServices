@@ -14,15 +14,14 @@ public class CachingExample {
     @Autowired
     CacheManager cacheManager;
 
-    HashMap<String, String> hm = new HashMap<>(); //Asssume it has data
+    HashMap<String, String> hm = new HashMap<>(); //Assume it has data, empName and it's country
 
 
     //here empName is key
     //Second Time if same empName passed it will return from Cache
     @Cacheable("employeesCache")
-    String getEmpId(String empName)
-    {
-        return  hm.get(empName);
+    String getEmpId(String empName) {
+        return hm.get(empName);
     }
 
     //Method to clean cache
@@ -31,27 +30,15 @@ public class CachingExample {
         System.out.println("Cache evicted for employee name: " + empName);
     }
 
-    //handeling manually
-    String [] getId (String [] key)
-    {
-        String[] output = new String[key.length];
-        int i=0;
+    //handling manually
+    String getId(String empName) {
         Cache cache = cacheManager.getCache("employeesCache");
-        for(String s: key)
-        {
-            if(cache.get(s)!=null)
-            {
-                output[i++]= String.valueOf(cache.get(s));
-            }
-            else
-            {
-                output[i++]= hm.get(s);
-                cache.put(s,hm.get(s));
-            }
+        if (cache.get(empName) != null) {
+            return cache.get(empName).toString();
+        } else {
+            cache.put(empName, hm.get(empName));
+            return hm.get(empName);
         }
-        return output;
     }
-
-
 }
 
